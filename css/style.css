@@ -1,0 +1,296 @@
+html, body {
+  width: 100vw;
+  height: 100vh;
+  height: -webkit-fill-available;
+  margin: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+#background {
+  background-image: radial-gradient(rgb(132, 0, 0), rgb(87, 0, 0));
+  /* background-color: hsl(220, 20%, 80%); */
+  /* https://www.freepik.com/free-vector/seamless-pattern-tile_2554140.htm */
+  /* background-image: url('../assets/background-motif.png');
+  background-size: 35%;
+  background-repeat: repeat;
+  background-blend-mode: color-burn; */
+}
+
+#background > svg {
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+#faceCanvas,
+#webcam,
+#background,
+#loader {
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover;
+  position: absolute;
+}
+
+#webcam {
+  opacity: 0;
+  transform: scaleX(-1);
+  transition: opacity 330ms ease-in-out;
+}
+
+#webcam.visible {
+  opacity: 1;
+}
+
+#background {
+  opacity: 1;
+  transition: opacity 330ms ease-in-out;
+}
+
+#webcam.visible + #background {
+  opacity: 0;
+}
+/* 
+#webcam.visible ~ #faceCanvas {
+  mix-blend-mode: multiply;
+} */
+
+#faceCanvas {
+  transform: scaleX(-1);
+}
+
+#loader {
+ background: rgba(255,255,255,0.5);
+ mix-blend-mode: screen;
+ z-index: 100;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+#loader > svg {
+  position: relative;
+  top: -2rem;
+}
+
+#loader .eyes,
+#features {
+  animation-duration: 4s;
+  animation-name: look-around;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes look-around {
+  from {
+    transform: translateX(-5px);
+  }
+
+  to {
+    transform: translateX(5px);
+  }
+}
+
+#visibilityToggle,
+#artist {
+  background: white;
+  border: none;
+  border-radius: 1rem;
+  height: 2rem;
+  box-shadow: 
+    0 2px 2px 0 rgba(0,0,0,0.14), 
+    0 3px 1px -2px rgba(0,0,0,0.12), 
+    0 1px 5px 0 rgba(0,0,0,0.2);
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  width: 2rem;
+  overflow: hidden;
+  white-space: pre;
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  transition: width 330ms ease-in-out;
+  cursor: pointer;
+  outline: none;
+  z-index: 99;
+}
+
+#visibilityToggle > svg {
+  position: absolute;
+  left: 0.25rem;
+  width: 24px;
+  height: 24px;
+  top: 0.25rem;
+}
+
+#back {
+  left: initial;
+  left: 0.5rem;
+  color: #232323;
+}
+
+#visibilityToggle > svg > .strikethrough {
+  transform-origin: 50% 50%;
+  transform: rotate(30deg);
+  transition: width 330ms ease-in-out;
+}
+
+#visibilityToggle > span {
+  position: absolute;
+  top: 0.25rem;
+  font-size: 1.25rem;
+  left: calc(0.5rem + 24px);
+}
+
+#visibilityToggle:hover,
+#visibilityToggle:focus {
+  width: 13rem;
+  width: fill-available;
+  box-shadow: 
+    0 3px 3px 0 rgba(0,0,0,0.14), 
+    0 1px 7px 0 rgba(0,0,0,0.12), 
+    0 3px 1px -1px rgba(0,0,0,0.2);
+}
+
+#artist:hover,
+#artist:focus {
+  box-shadow: 
+    0 3px 3px 0 rgba(0,0,0,0.14), 
+    0 1px 7px 0 rgba(0,0,0,0.12), 
+    0 3px 1px -1px rgba(0,0,0,0.2);
+}
+
+#artist {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  text-transform: capitalize;
+  right: initial;
+  top: initial;
+  bottom: 0.5rem;
+  text-decoration: none;
+  color: #232323;
+  padding: 0 0.5rem;
+  font-weight: bold;
+}
+
+#visibilityToggle.on > svg > .strikethrough {
+  width: 0;
+}
+
+#visibilityToggle > svg > .strikethrough {
+  width: 24px;
+}
+
+.carousel,
+.photo-carousel {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+.texture {
+  visibility: hidden;
+}
+
+.texture,
+.photo {
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+}
+
+.gallery-types {
+  display: flex;
+  width: 50vw;
+  position: absolute;
+  height: 2rem;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
+  z-index: 1;
+  margin: 0.5rem auto;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  font-family: monospace;
+  box-shadow: 0 0 1px 1px #232323;
+  /* , 0 0 1px 1px #232323 inset */
+}
+.gallery-types > input {
+  display: none;
+}
+.gallery-types > input:checked + label {
+  color: #232323;
+}
+.gallery-types > input:nth-of-type(1):checked ~ label:last-of-type:before {
+  transform: translateX(calc(0% + 0px));
+}
+
+.gallery-types > input:nth-of-type(2):checked ~ label:last-of-type:before {
+  transform: translateX(calc(100% + 0px));
+}
+.gallery-types label {
+  flex: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  font-weight: bold;
+}
+.gallery-types > input:not(:checked) + label {
+  text-shadow: 0    0   1px #232323,
+              -1px  0   1px #232323,
+               0   -1px 1px #232323,
+               1px  0   1px #232323,
+               0    1px 1px #232323;
+}
+.gallery-types label:last-of-type:before {
+  content: "";
+  display: block;
+  max-width: calc(50% - 0px);
+  margin: 0px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  transform: translateX(0);
+}
+.gallery-types label {
+  padding: 6px 3px;
+  transition: color 250ms cubic-bezier(0, 0.95, 0.38, 0.98);
+}
+.gallery-types label:before {
+  background: #fff;
+  transition: all 250ms cubic-bezier(0, 0.95, 0.38, 0.98);
+}
+.gallery-types label:not(:last-child) {
+  border-right: 1px solid #fff;
+}
+
+.ar > .photo-carousel {
+  visibility: hidden;
+}
+
+.photo-carousel {
+  background: black;
+}
+
+.photos > #faceCanvas,
+.photos > #webcam,
+.photos > .carousel {
+  display: none;
+}
